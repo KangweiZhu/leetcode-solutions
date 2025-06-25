@@ -1,20 +1,22 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        m = len(nums)
+        '''
+            2 1 3
+        '''
         result = []
-        temp_result = []
-        
-        def backtrack(curr_size):
-            if curr_size == m:
-                result.append(temp_result.copy())
-                return
-            for i in range(m):
-                if nums[i] not in temp_result:
-                    temp_result.append(nums[i])
-                    curr_size += 1
-                    backtrack(curr_size)
-                    temp_result.pop()
-                    curr_size -= 1
+        result_builder = []
 
-        backtrack(0)
+        def backtrack():
+            if len(result_builder) == len(nums):
+                result.append(result_builder.copy())
+                return
+            for i in range(len(nums)):
+                if nums[i] in result_builder:
+                    continue
+                else:
+                    result_builder.append(nums[i])
+                    backtrack()
+                    result_builder.pop()
+        
+        backtrack()
         return result

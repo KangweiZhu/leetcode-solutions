@@ -1,18 +1,21 @@
 class Solution:
-    def subsets(self, nums: List[int]) -> List[List[int]]:  
+    def subsets(self, nums: List[int]) -> List[List[int]]:
         '''
-            0 1    12    123     13      2
+            [1,2,3]
+            [[], [1], [2], [3], [1,2], [1,3],[2,3], [1,2,3]]
         '''
-        m = len(nums)
         result = []
-        temp_result = []
-
+        result_builder = []
+        
         def backtrack(start):
-            result.append(temp_result.copy())
-            for i in range(start, m):
-                temp_result.append(nums[i])
+            result.append(result_builder.copy())
+            '''
+                [], [1], [1,2], [1,2,3], [1,3], [2], [2,3],[3]
+            '''
+            for i in range(start, len(nums)):
+                result_builder.append(nums[i])
                 backtrack(i + 1)
-                temp_result.pop()
+                result_builder.pop()
         
         backtrack(0)
         return result
